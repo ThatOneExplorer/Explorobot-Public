@@ -17,8 +17,9 @@ module.exports = {
 
     if(!descriptor){
         let nodescriptor = new Discord.MessageEmbed()
-        .setAuthor(message.member.tag, message.author.avatarURL())
-        .setTitle(`${message.author.username}#${message.author.tag} An Error Has Occured`)
+        
+        .setAuthor(message.author.tag, message.author.avatarURL())
+        .setTitle(`${message.author.tag} An Error Has Occured`)
         .setColor("RED")
         .addFields(
             {name: `No about me status given!`, value: `Please provide a custom message to be shown on your user info card.`}
@@ -31,8 +32,9 @@ module.exports = {
     if(aboutme === null){
     await db.set(`aboutme_${message.author.id}_${message.guild.id}`, `${descriptor}`)
     let setembed = new Discord.MessageEmbed()
-    .setAuthor(message.member.tag, message.author.avatarURL())
-    .setTitle(`${message.author.username}#${message.author.discriminator} Success!`)
+    
+    .setAuthor(message.author.tag, message.author.avatarURL())
+    .setTitle(`${message.author.tag} Success!`)
     .setColor("GREEN")
     .addFields(
         {name: `Sucessfully set about me status!`, value: `Set status to ${descriptor}`}
@@ -44,7 +46,7 @@ module.exports = {
        db.set(`aboutme_${message.author.id}_${message.guild.id}`, `${descriptor}`)
        let setembed = new Discord.MessageEmbed()
        .setAuthor(message.author.tag, message.author.avatarURL())
-       .setTitle(`${message.member.tag} Success!`)
+       .setTitle(`${message.author.tag} Success!`)
        .setColor("GREEN")
        .addFields(
            {name: `Sucessfully set about me status!`, value: `Set status to ${descriptor}`}

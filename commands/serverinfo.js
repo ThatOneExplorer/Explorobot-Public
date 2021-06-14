@@ -12,7 +12,7 @@ let infoembed = new Discord.MessageEmbed()
 .setTitle(`**Server info for ${message.guild.name}**`)
 .addFields(
 
-{name: 'Member Count',    value: ` ${member.guild.members.cache.filter(member => !member.user.bot).size} `},
+{name: 'Member Count',    value: ` ${message.guild.members.cache.filter(member => !member.user.bot).size} `},
 {name: 'Owner',    value: `${message.guild.owner}`},
 { name: 'Server name',       value: `${message.guild.name}` },
 { name: 'Server boosts',       value: `${message.guild.premiumSubscriptionCount}` }

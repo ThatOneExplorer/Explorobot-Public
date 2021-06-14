@@ -91,8 +91,7 @@ async	execute(message) {
         
         let time = args[2];
         let reason = args.slice(3).join(' ');
-        let mutes = db.get(`mutes_${message.guild.id}_${member.user.id}`)
-        let recentm = db.get(`recentm_${message.guild.id}_${member.id}`)
+        let modlogs = db.get(`modlogs_${message.guild.id}_${member.id}`)
         let nomutereasonembed = new Discord.MessageEmbed()
         .setColor('RED')
         
@@ -119,9 +118,14 @@ async	execute(message) {
         return message.channel.send (nomutereasonembed)
         
 
-        if(mutes === null){
-          db.set(`mutes_${message.guild.id}_${member.user.id}`, 1 )
-          db.get(`recentm_${message.guild.id}_${member.id}`, reason)
+        if(modlogs === null){
+          await db.set(`modlogs_${message.guild.id}_${member.user.id}`, {reasons:[`
+          Action:Mute
+          Muted for ${reason}
+          Muted by ${message.author.tag}
+          Mute duration ${time}
+          ------------------------------`
+         ]})
 member.roles.add(muterole).catch(error => message.reply(`Sorry ${message.author}: ${error}`));
 
         
@@ -162,10 +166,15 @@ member.roles.add(muterole).catch(error => message.reply(`Sorry ${message.author}
       }, ms(time));
     
         }
-    if(mutes !== null){
-      db.add(`mutes_${message.guild.id}_${member.user.id}`, 1)
-      db.delete(`recentm_${message.guild.id}_${member.id}`)
-      db.set(`recentm_${message.guild.id}_${member.id}`, reason)
+        if(modlogs !== null){
+
+          db.push(`modlogs_${message.guild.id}_${member.user.id}.reasons`, `
+          Action:Mute
+          Muted for ${reason}
+          Muted by ${message.author.tag}
+          Mute duration ${time}
+          ------------------------------`
+          )
       member.roles.add(muterole).catch(error => message.reply(`Sorry ${message.author}: ${error}`));
          
     

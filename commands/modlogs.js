@@ -43,26 +43,10 @@ const { prefix } = require('./config.json');
 
    if(!member)
   return message.channel.send(validMemberEmbed)
-   let warnings = db.get(`warnings_${message.guild.id}_${member.user.id}`)
-    let mutes = db.get(`mutes_${message.guild.id}_${member.user.id}`)
-    let kicks = db.get(`kicks_${message.guild.id}_${member.user.id}`)
-    let bans = db.get(`bans_${message.guild.id}_${member.user.id}`)
-   let recentw = db.get(`recentw_${message.guild.id}_${member.id}`)
-   let recentm = db.get(`recentm_${message.guild.id}_${member.id}`)
-  let recentk = db.get(`recentk_${message.guild.id}_${member.id}`)
-  let recentb = db.get(`recentb_${message.guild.id}_${member.id}`)
+  let modlogs = db.get(`modlogs_${message.guild.id}_${member.user.id}.reasons`)
 
    let botbansmember = db.get(`botbans_${message.guild.id}_${member.user.id}`)
-if(warnings === null) warnings = 'This user has no warns!';
-if(recentw === null) recentw ='No recent warns logs';
-if(mutes === null) mutes = 'This user has no mutes!';
-if(recentm === null) recentm = 'No recent mute logs'
-if(kicks === null) kicks = 'This user has no kicks!';
-if(recentk === null) recentk = 'No recent kick logs'
-if(bans === null) bans = 'This user has no bans!';
-if(recentb === null) recentb = 'No recent ban logs'
-if(botbansmember === null) botbansmember = 'This user is not bot banned!'
-if(botbansmember !== null) botbansmember = 'This user is bot banned!'
+if (modlogs === null) modlogs = 'Users modlogs are cleaner then a plate!'
 const av = member.user.avatarURL();
 let warningsembed = new Discord.MessageEmbed()
 .setColor('GREEN')
@@ -70,15 +54,9 @@ let warningsembed = new Discord.MessageEmbed()
 .setTitle(`Modlogs for ${member.user.username}#${member.user.discriminator}`)
 .setDescription(`${botbansmember}`)
 .addFields(
-{name: `Warns`, value: `${warnings}`},
-{name: `Most recent warn`, value: `${recentw}`},
-{name: `Mutes`, value: `${mutes}`},
-{name: `Most recent mutes`, value: `${recentm}`},
-{name: `Kicks`, value: `${kicks}`},
-{name: `Most recent kicks`, value: `${recentk}`},
-{name: `Bans`, value: `${bans}`},
-{name: `Most recent bans`, value: `${recentb}`}
+  {name: `Modlogs`, value: `${modlogs}`}
 )
+
 message.channel.send(warningsembed)
 
 }

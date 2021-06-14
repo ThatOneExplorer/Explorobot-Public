@@ -72,8 +72,8 @@ const { prefix } = require('./config.json');
     
        
         let reason = args.slice(2).join(' ');
-        let kicks = db.get(`kicks_${message.guild.id}_${member.user.id}`)
-        let recentk = db.get(`recentk_${message.guild.id}_${member.id}`)
+      
+    let modlogs = db.get(`modlogs_${message.guild.id}_${member.id}`)
         
     
        
@@ -98,10 +98,13 @@ const { prefix } = require('./config.json');
         return message.channel.send(noreasonembed)
     
     
-    
-        if(kicks === null){
-          db.set(`kicks_${message.guild.id}_${member.user.id}`, 1 )
-          db.set(`recentk_${message.guild.id}_${member.id}`,`${reason}`)
+        if(modlogs === null){
+          await db.set(`modlogs_${message.guild.id}_${member.user.id}`, {reasons:[`
+          Action:Kick
+          Kicked for ${reason}
+          Kicked by ${message.author.tag}
+          ------------------------------`
+         ]})
         let kickDMembed = new Discord.MessageEmbed()
         .setColor('RED')
         .setTitle(`You have been Kicked from ${message.guild.name}`)
@@ -127,10 +130,15 @@ const { prefix } = require('./config.json');
       member.kick(reason).catch(error => message.channel.send(`Sorry ${message.author}, could kick because of: ${error}`));
       
       }
-      if(kicks !== null){
-        db.add(`kicks_${message.guild.id}_${member.user.id}`, 1)
-    db.delete(`recentk_${message.guild.id}_${member.id}`)
-    db.set(`recentk_${message.guild.id}_${member.id}`,`${reason}`)
+      if(modlogs !== null){
+
+        db.push(`modlogs_${message.guild.id}_${member.user.id}.reasons`, `
+        Action:Mute
+        Muted for ${reason}
+        Muted by ${message.author.tag}
+        Mute duration ${time}
+        ------------------------------`
+        )
         let kickDMembed = new Discord.MessageEmbed()
         .setColor('RED')
         .setTitle(`You have been Kicked from ${message.guild.name}`)

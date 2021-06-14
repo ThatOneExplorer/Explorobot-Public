@@ -16,6 +16,7 @@ const { prefix } = require('./config.json');
      
         let appeallink = db.get(`appeallink_${message.guild.id}`)
 
+        let modlogs = db.get(`modlogs_${message.guild.id}_${member.id}`)
 
         const userstring = `${message.author.username}#${message.author.discriminator}`
 
@@ -100,9 +101,13 @@ const { prefix } = require('./config.json');
         if(!reason) 
         return message.channel.send(noreasonembed)
     
-        if(bans === null){
-          db.set(`bans_${message.guild.id}_${member.user.id}`, 1 )
-          db.set(`recentb_${message.guild.id}_${member.id}`,`${reason}`)
+        if(modlogs === null){
+          await db.set(`modlogs_${message.guild.id}_${member.user.id}`, {reasons:[`
+          Action:Ban
+          Banned for ${reason}
+          Banned by ${message.author.tag}
+          ------------------------------`
+         ]})
 
         let banDMembedNOLINK = new Discord.MessageEmbed()
        
@@ -146,11 +151,15 @@ const { prefix } = require('./config.json');
         message.channel.send(bansuccessEmbed);
         banchannel.send(bansuccessEmbed)
      }
-   
- if(bans !== null){
-    db.add(`bans_${message.guild.id}_${member.user.id}`, 1)
-    db.delete(`recentb_${message.guild.id}_${member.id}`)
-    db.set(`recentb_${message.guild.id}_${member.id}`,`${reason}`)
+     if(modlogs !== null){
+
+      db.push(`modlogs_${message.guild.id}_${member.user.id}.reasons`, `
+      Action:Mute
+      Muted for ${reason}
+      Muted by ${message.author.tag}
+      Mute duration ${time}
+      ------------------------------`
+      )
 
 
     let banDMembedNOLINK = new Discord.MessageEmbed()

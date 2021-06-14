@@ -7,7 +7,8 @@ async	execute(message) {
         const Discord = require('discord.js');
         const args = (message.content.slice(prefix.length).trim().split(/ +/g))
         const db = require('quick.db')
-
+        const currentDate = new Date();
+         const timestamp = currentDate. getTime();
     
        
 
@@ -68,7 +69,7 @@ let RolePermsEmbed = new Discord.MessageEmbed()
     .setColor('RED')
     .addFields(
 
-      {name: `Unable to mute ${member.user.username}#${member.user.discriminator}`, value: `This user is a moderator or admin, they can't be muted`,}
+      {name: `Unable to warn ${member.user.username}#${member.user.discriminator}`, value: `This user is a moderator or admin, they can't be muted`,}
     )
     
     if(member.hasPermission("KICK_MEMBERS"))
@@ -82,20 +83,14 @@ let RolePermsEmbed = new Discord.MessageEmbed()
 
     console.log(`warn command has been used in ${message.guild.name} by ${message.author.username}`);
 
-    let warnings = db.get(`warnings_${message.guild.id}_${member.id}`)
-    let recentw = db.get(`recentw_${message.guild.id}_${member.id}`)
-    if(warnings === null){
-           await db.set(`warnings_${message.guild.id}_${member.user.id}`, 1)
-   
-
-    if(recentw === null){
-  db.set(`recentw_${message.guild.id}_${member.id}`, reason)
-    }
-    
-    else if(recentw !== null){
-                  await db.delete(`recentw_${message.guild.id}_${member.id}`)
-                  db.set(`recentw_${message.guild.id}_${member.id}`, reason)
-    }
+    let modlogs = db.get(`modlogs_${message.guild.id}_${member.id}`)
+    if(modlogs === null){
+           await db.set(`modlogs_${message.guild.id}_${member.user.id}`, {reasons:[`
+           Action:Warn 
+           Warned for ${reason}
+           Warned by ${message.author.tag}
+           ------------------------------`
+          ]})
 
     WarnEmbed = new Discord.MessageEmbed()
     .setTitle(`you have been warned in ${message.guild.name}`)
@@ -125,19 +120,17 @@ let RolePermsEmbed = new Discord.MessageEmbed()
 
     }
 
-    if(warnings !== null){
+    if(modlogs !== null){
 
-      db.add(`warnings_${message.guild.id}_${member.user.id}`, 1)
+      db.push(`modlogs_${message.guild.id}_${member.user.id}.reasons`, `
+      Action:Warn 
+      Warned for ${reason} 
+      Warned by ${message.author.tag}
+      ------------------------------`
 
+      )
 
-      if(recentw === null){
-        db.set(`recentw_${message.guild.id}_${member.id}`, reason)
-          }
-          
-          else if(recentw !== null){
-                        await   db.delete(`recentw_${message.guild.id}_${member.id}`)
-                        db.set(`recentw_${message.guild.id}_${member.id}`, reason)
-          }
+    
 
           
       WarnEmbed = new Discord.MessageEmbed()
