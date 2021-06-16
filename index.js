@@ -5,6 +5,7 @@ const { token } = require("./token.json")
 const { ownerID } = require("./owners.json")
 let db = require('quick.db')
 const path = require("path");
+const webhook = require("webhook-discord")
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
@@ -55,7 +56,7 @@ client.on("message", async message => {
 		return message.channel.send(botbannedembed)
 		}
 
-   
+   else if (botbans === null){
 	let commandindmembed = new Discord.MessageEmbed()
 	.setColor('RED')
 	.setTitle(`${message.author.username}, ERROR`)
@@ -77,13 +78,15 @@ const args = message.content.slice(prefix.length).trim().split(/ +/g);
 		console.error(error);
 		message.reply('there was an error trying to execute that command!');
 	}
-	const debugchannel = await message.client.channels.fetch("840577366983573515").catch(e => {console.log(`There was an error: ${e}`)});
+	const debugchannel = await message.client.channels.fetch("840574175876743218").catch(e => {console.log(`There was an error: ${e}`)});
 	let messagelog = new Discord.MessageEmbed()
-.setTitle(`Command ran by ${message.author.tag} || ${message.author.id}:`)
+.setTitle(`Message logged from ${message.author.tag} || ${message.author.id}:`)
 .setDescription(`${message.content}`)
+
 .setColor("#e98df7")
 debugchannel.send(messagelog)
     console.log(`${command} has been used in ${message.guild.name} by ${message.author.username}#${message.author.discriminator} (${message.author.id})`);
+}
 });
 
 client.on('message', message => {

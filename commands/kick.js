@@ -133,10 +133,9 @@ const { prefix } = require('./config.json');
       if(modlogs !== null){
 
         db.push(`modlogs_${message.guild.id}_${member.user.id}.reasons`, `
-        Action:Mute
-        Muted for ${reason}
-        Muted by ${message.author.tag}
-        Mute duration ${time}
+        Action:Kick
+        Kicked for ${reason}
+        Kicked by ${message.author.tag}
         ------------------------------`
         )
         let kickDMembed = new Discord.MessageEmbed()

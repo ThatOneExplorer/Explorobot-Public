@@ -154,10 +154,10 @@ const { prefix } = require('./config.json');
      if(modlogs !== null){
 
       db.push(`modlogs_${message.guild.id}_${member.user.id}.reasons`, `
-      Action:Mute
-      Muted for ${reason}
-      Muted by ${message.author.tag}
-      Mute duration ${time}
+      Action:Ban
+      Banned for ${reason}
+      Banned by ${message.author.tag}
+      
       ------------------------------`
       )
 
