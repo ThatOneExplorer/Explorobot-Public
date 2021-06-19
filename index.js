@@ -3,10 +3,12 @@ const Discord = require('discord.js');
 const { prefix } = require('./commands/config.json');
 const { token } = require("./token.json")
 const { ownerID } = require("./owners.json")
+const disbut = require('discord-buttons');
 let db = require('quick.db')
 const path = require("path");
 const webhook = require("webhook-discord")
 const client = new Discord.Client();
+disbut(client) 
 client.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
