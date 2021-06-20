@@ -21,7 +21,7 @@ module.exports = {
 
             let button = new MessageButton()
     .setLabel("Press me to delete this meme if it is NSFW!")
-    .setStyle("blurple")
+    .setStyle("red")
     .setID("memedelete_button")
     const embedandbuttonm = message.channel.send({
       component: button,
