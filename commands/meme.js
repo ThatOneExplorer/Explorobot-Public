@@ -19,15 +19,7 @@ module.exports = {
             .setTitle(`This meme has been taken from /r/${random}`)
             .setURL(`https://reddit.com/r/${random}`)
 
-            let button = new MessageButton()
-    .setLabel("Press me to delete this meme if it is NSFW!")
-    .setStyle("red")
-    .setID("memedelete_button")
-    const embedandbuttonm = message.channel.send({
-      component: button,
-      embed: embed
-  });
-
-
+         
+               message.channel.send(embed)
         }
     }

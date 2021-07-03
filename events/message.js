@@ -6,7 +6,11 @@ const prefix =  ("!")
 module.exports = async message  => {
     
    
+if(message.content.toLowerCase() === "stupid bot"){
+  return message.reply("uno reverse card https://tenor.com/view/reverse-card-uno-uno-cards-gif-13032597")
 
+  // message.author.ban({ reason: "insulting bot :(("}) dont make me uncomment this
+}
 	const args = message.content.slice(prefix.length).trim().split(/ +/g);
   const debugchannel = await message.client.channels.fetch("840574175876743218").catch(e => {console.log(`There was an error: ${e}`)});
 if(message.author.id == ('760607345217896448')){
