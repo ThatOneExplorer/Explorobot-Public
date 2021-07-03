@@ -16,7 +16,7 @@ const { prefix } = require('./config.json');
      
         let appeallink = db.get(`appeallink_${message.guild.id}`)
 
-        let modlogs = db.get(`modlogs_${message.guild.id}_${member.id}`)
+     
 
         const userstring = `${message.author.username}#${message.author.discriminator}`
 
@@ -100,7 +100,8 @@ const { prefix } = require('./config.json');
     
         if(!reason) 
         return message.channel.send(noreasonembed)
-    
+        
+        let modlogs = db.get(`modlogs_${message.guild.id}_${member.id}`)
         if(modlogs === null){
           await db.set(`modlogs_${message.guild.id}_${member.user.id}`, {reasons:[`
           Action:Ban

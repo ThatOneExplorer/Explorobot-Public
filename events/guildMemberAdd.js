@@ -89,11 +89,12 @@ let av = member.user.avatarURL();
 
 if(welcomesetting === null){
     await channel.send(welcomeembed)
-   await member.send(`**Welcome to ${member.guild.name} Make sure to complete the screening and verify in <#760610183087915061>, If you have any questitons then DM this bot to open a modmail, Thanks on behalf of the ${member.guild.name} Staff team**`)
-}
+   await member.send(`**Welcome to ${member.guild.name} Make sure to complete the screening and verify in <#760610183087915061>, If you have any questitons then DM this bot to open a modmail, Thanks on behalf of the ${member.guild.name} Staff team**`).catch(e => {console.log(e)})
+
 
 if(welcomesetting !== null){
-member.send(`**Welcome to ${member.guild.name} Make sure to complete the screening and verify in <#760610183087915061>, If you have any questitons then DM this bot to open a modmail, Thanks on behalf of the ${member.guild.name} Staff team**`)
+member.send(`**Welcome to ${member.guild.name} Make sure to complete the screening and verify in <#760610183087915061>, If you have any questitons then DM this bot to open a modmail, Thanks on behalf of the ${member.guild.name} Staff team**`).catch(e => {console.log(e)})
+}
 }
 }
 }

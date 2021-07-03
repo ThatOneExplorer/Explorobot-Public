@@ -210,6 +210,8 @@ const censoralert = await message.client.channels.fetch("804872134643810324").ca
 if (!includedBadWord)
     return;
 
+    if(message.member.hasPermission("MANAGE_MESSAGES"))
+    return;
 
 
 let alert = new Discord.MessageEmbed()
@@ -230,7 +232,6 @@ let alert = new Discord.MessageEmbed()
          
       await censoralert.send(alert).catch(e => {console.log(`There was an error: ${e}`)})
         message.delete().catch(e => {console.log(`There was an error: ${e}`)})
-
 
 }
 
